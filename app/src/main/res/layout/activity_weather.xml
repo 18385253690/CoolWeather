@@ -40,6 +40,24 @@
 
                     <include layout="@layout/forecast" />
 
+                    <com.example.liuyueyue.coolweather.widget.WeatnerChartView
+                        android:id="@+id/weather_char1"
+                        android:background="#8000"
+                        android:layout_margin="15dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="155dp" />
+
+
+                    <com.example.liuyueyue.coolweather.widget.WeatnerChartView
+                        android:id="@+id/weather_char2"
+                        android:background="#8000"
+                        android:layout_margin="15dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="155dp" />
+
+
+
+
                     <include layout="@layout/aqi" />
 
                     <include layout="@layout/suggestion" />

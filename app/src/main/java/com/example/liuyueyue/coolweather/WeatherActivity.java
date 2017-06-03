@@ -25,8 +25,11 @@ import com.example.liuyueyue.coolweather.gson.Weather;
 import com.example.liuyueyue.coolweather.service.AutoUpdateService;
 import com.example.liuyueyue.coolweather.util.HttpUtil;
 import com.example.liuyueyue.coolweather.util.Utility;
+import com.example.liuyueyue.coolweather.widget.WeatherItem;
+import com.example.liuyueyue.coolweather.widget.WeatnerChartView;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -45,6 +48,9 @@ public class WeatherActivity extends AppCompatActivity{
     private TextView carWashText;
     private TextView sportText;
     private ImageView bingPicImg;
+
+    private WeatnerChartView chart1;
+    private WeatnerChartView chart2;
 
     public SwipeRefreshLayout swipeRefresh;
     private String mWeatherId;
@@ -77,6 +83,9 @@ public class WeatherActivity extends AppCompatActivity{
         swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navButton = (Button) findViewById(R.id.nav_button);
+
+        chart1= (WeatnerChartView) findViewById(R.id.weather_char1);
+        chart2= (WeatnerChartView) findViewById(R.id.weather_char2);
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String weatherString = prefs.getString("weather", null);
@@ -181,8 +190,6 @@ public class WeatherActivity extends AppCompatActivity{
 
                     }
                 });
-
-
             }
 
             private void showWeatherInfo(Weather weather) {
@@ -195,6 +202,11 @@ public class WeatherActivity extends AppCompatActivity{
                 degreeText.setText(degree);
                 weatherInfoText.setText(weatherInfo);
                 forecastLayout.removeAllViews();
+                ArrayList<WeatherItem> list= new ArrayList<WeatherItem>();
+                ArrayList<WeatherItem> list1= new ArrayList<WeatherItem>();
+
+
+
                 for (Forecast forecast : weather.forecastList) {
                     View view = LayoutInflater.from(this).inflate(R.layout.forecast_item, forecastLayout, false);
                     TextView dateText = (TextView) view.findViewById(R.id.date_text);
@@ -203,10 +215,18 @@ public class WeatherActivity extends AppCompatActivity{
                     TextView minText = (TextView) view.findViewById(R.id.min_text);
                     dateText.setText(forecast.date);
                     infoText.setText(forecast.more.info);
+                    list.add(new WeatherItem("",Integer.parseInt(forecast.temperature.max)));
+                    list1.add(new WeatherItem("",Integer.parseInt(forecast.temperature.min)));
                     maxText.setText(forecast.temperature.max);
                     minText.setText(forecast.temperature.min);
                     forecastLayout.addView(view);
                 }
+                chart1.SetTuView(list, "最高温度：");
+                chart1.invalidate();
+
+                chart2.SetTuView(list, "最低温度：");
+                chart2.invalidate();
+
                 if (weather.aqi != null) {
                     aqiText.setText(weather.aqi.city.aqi);
                     pm25Text.setText(weather.aqi.city.pm25);

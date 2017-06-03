@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 
-import com.example.liuyueyue.coolweather.gson.Weather;
-
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -19,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, WeatherActivity.class);
             startActivity(intent);
             finish();
+
         }
     }
 }
